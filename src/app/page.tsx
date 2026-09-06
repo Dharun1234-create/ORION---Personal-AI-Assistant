@@ -3,8 +3,14 @@
 import React from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
+import { OrionExperience } from "@/components/OrionExperience";
+import { CoreFeatures } from "@/components/CoreFeatures";
+import { HowOrionThinks } from "@/components/HowOrionThinks";
+import { SmartReminderDemo } from "@/components/SmartReminderDemo";
+import { VisionSection } from "@/components/VisionSection";
+import { CTASection } from "@/components/CTASection";
+import { Footer } from "@/components/Footer";
 import { BackgroundGlow } from "@/components/BackgroundGlow";
-import { OrionLogo } from "@/components/OrionLogo";
 
 export default function Home() {
   return (
@@ -15,25 +21,20 @@ export default function Home() {
       {/* Navigation Header */}
       <Navbar />
 
-      {/* Main Cinematic Hero Section */}
+      {/* Main Experience & Features Sequence */}
       <main>
         <Hero />
+        <OrionExperience />
+        <CoreFeatures />
+        <HowOrionThinks />
+        <SmartReminderDemo />
+        <VisionSection />
+        <CTASection />
       </main>
 
-      {/* Minimal Footer */}
-      <footer className="relative z-10 border-t border-slate-900/80 py-8 text-center text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <OrionLogo size="sm" showWordmark={true} />
-            <span className="text-slate-600">|</span>
-            <span className="text-slate-400">Personal AI System</span>
-          </div>
-
-          <p className="text-slate-400">
-            © {new Date().getFullYear()} ORION. All rights reserved. Phase 1 — Visual Foundation & Hero Experience.
-          </p>
-        </div>
-      </footer>
+      {/* Modular Footer */}
+      <Footer />
     </div>
   );
 }
+

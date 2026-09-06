@@ -9,21 +9,48 @@ import { motion, AnimatePresence } from "framer-motion";
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
+
+      const sections = ["home", "features", "how-it-works", "about"];
+      const scrollPosition = window.scrollY + 120;
+
+      for (const sectionId of sections) {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { name: "Home", href: "#home", active: true },
-    { name: "Features", href: "#features" },
-    { name: "How It Works", href: "#how-it-works" },
-    { name: "About", href: "#about" },
+    { name: "Home", href: "#home", id: "home" },
+    { name: "Features", href: "#features", id: "features" },
+    { name: "How It Works", href: "#how-it-works", id: "how-it-works" },
+    { name: "About", href: "#about", id: "about" },
   ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    setActiveSection(targetId);
+    setMobileMenuOpen(false);
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <header
@@ -33,37 +60,53 @@ export const Navbar: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Left: Logo */}
-        <a href="#" className="flex items-center gap-2 focus:outline-none">
+        <a
+          href="#home"
+          onClick={(e) => handleNavClick(e, "home")}
+          className="flex items-center gap-2 focus:outline-none"
+        >
           <OrionLogo size="md" />
         </a>
 
         {/* Center Navigation Links (Desktop) */}
         <nav className="hidden md:flex items-center gap-1 px-4 py-1.5 rounded-full bg-slate-900/60 border border-white/5 backdrop-blur-md">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all duration-300 relative ${
-                link.active
-                  ? "text-white"
-                  : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
-              }`}
-            >
-              {link.active && (
-                <motion.div
-                  layoutId="activeNavBg"
-                  className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 -z-10"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-              {link.name}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.id;
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.id)}
+                className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all duration-300 relative ${
+                  isActive
+                    ? "text-white"
+                    : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeNavBg"
+                    className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 -z-10"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                {link.name}
+              </a>
+            );
+          })}
         </nav>
 
         {/* Right: CTA (Desktop) */}
         <div className="hidden md:flex items-center gap-4">
-          <CTAButton variant="primary" size="md" icon={false}>
+          <CTAButton
+            variant="primary"
+            size="md"
+            icon={false}
+            onClick={() => {
+              const el = document.getElementById("experience");
+              el?.scrollIntoView({ behavior: "smooth" });
+            }}
+          >
             Get Started
           </CTAButton>
         </div>
@@ -91,25 +134,32 @@ export const Navbar: React.FC = () => {
             className="md:hidden glass-panel border-t border-white/10 overflow-hidden"
           >
             <div className="px-6 py-6 space-y-4 max-w-7xl mx-auto flex flex-col">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center justify-between text-base font-medium py-2.5 border-b border-slate-800/60 ${
-                    link.active ? "text-cyan-400 font-semibold" : "text-slate-300"
-                  }`}
-                >
-                  <span>{link.name}</span>
-                  {link.active && <Sparkles className="w-4 h-4 text-cyan-400" />}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.id;
+                return (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.id)}
+                    className={`flex items-center justify-between text-base font-medium py-2.5 border-b border-slate-800/60 ${
+                      isActive ? "text-cyan-400 font-semibold" : "text-slate-300"
+                    }`}
+                  >
+                    <span>{link.name}</span>
+                    {isActive && <Sparkles className="w-4 h-4 text-cyan-400" />}
+                  </a>
+                );
+              })}
               <div className="pt-4">
                 <CTAButton
                   variant="primary"
                   size="md"
                   className="w-full justify-center"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    const el = document.getElementById("experience");
+                    el?.scrollIntoView({ behavior: "smooth" });
+                  }}
                 >
                   Get Started
                 </CTAButton>
@@ -121,3 +171,4 @@ export const Navbar: React.FC = () => {
     </header>
   );
 };
+
