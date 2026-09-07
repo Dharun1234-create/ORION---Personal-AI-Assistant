@@ -73,7 +73,7 @@ export const Hero: React.FC = () => {
                 variant="primary"
                 size="lg"
                 onClick={() => {
-                  const el = document.getElementById("experience");
+                  const el = document.getElementById("talk-to-orion");
                   el?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
@@ -83,7 +83,7 @@ export const Hero: React.FC = () => {
                 variant="secondary"
                 size="lg"
                 onClick={() => {
-                  const el = document.getElementById("features");
+                  const el = document.getElementById("talk-to-orion");
                   el?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
@@ -174,7 +174,7 @@ export const Hero: React.FC = () => {
               size="lg"
               className="w-full sm:w-auto"
               onClick={() => {
-                const el = document.getElementById("experience");
+                const el = document.getElementById("talk-to-orion");
                 el?.scrollIntoView({ behavior: "smooth" });
               }}
             >
@@ -185,7 +185,7 @@ export const Hero: React.FC = () => {
               size="lg"
               className="w-full sm:w-auto"
               onClick={() => {
-                const el = document.getElementById("features");
+                const el = document.getElementById("talk-to-orion");
                 el?.scrollIntoView({ behavior: "smooth" });
               }}
             >

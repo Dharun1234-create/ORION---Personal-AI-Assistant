@@ -4,6 +4,7 @@ import React from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { OrionExperience } from "@/components/OrionExperience";
+import { OrionWorkspace } from "@/components/OrionWorkspace";
 import { CoreFeatures } from "@/components/CoreFeatures";
 import { HowOrionThinks } from "@/components/HowOrionThinks";
 import { SmartReminderDemo } from "@/components/SmartReminderDemo";
@@ -24,6 +25,7 @@ export default function Home() {
       {/* Main Experience & Features Sequence */}
       <main>
         <Hero />
+        <OrionWorkspace />
         <OrionExperience />
         <CoreFeatures />
         <HowOrionThinks />

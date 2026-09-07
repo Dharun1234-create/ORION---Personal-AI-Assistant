@@ -15,7 +15,7 @@ export const Navbar: React.FC = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      const sections = ["home", "features", "how-it-works", "about"];
+      const sections = ["home", "talk-to-orion", "features", "how-it-works", "about"];
       const scrollPosition = window.scrollY + 120;
 
       for (const sectionId of sections) {
@@ -37,6 +37,7 @@ export const Navbar: React.FC = () => {
 
   const navLinks = [
     { name: "Home", href: "#home", id: "home" },
+    { name: "Talk to ORION", href: "#talk-to-orion", id: "talk-to-orion" },
     { name: "Features", href: "#features", id: "features" },
     { name: "How It Works", href: "#how-it-works", id: "how-it-works" },
     { name: "About", href: "#about", id: "about" },
@@ -103,7 +104,7 @@ export const Navbar: React.FC = () => {
             size="md"
             icon={false}
             onClick={() => {
-              const el = document.getElementById("experience");
+              const el = document.getElementById("talk-to-orion");
               el?.scrollIntoView({ behavior: "smooth" });
             }}
           >
